@@ -3,6 +3,7 @@ package com.example.todolistrest.controllers;
 import com.example.todolistrest.dto.PersonDTO;
 import com.example.todolistrest.services.PeopleService;
 import com.example.todolistrest.utils.CreateException;
+import com.example.todolistrest.utils.NotFoundException;
 import com.example.todolistrest.utils.PersonErrorResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,12 +35,22 @@ public class PeopleController {
     }
 
     @ExceptionHandler
-    private ResponseEntity handeException(CreateException e) {
+    private ResponseEntity handleException(CreateException e) {
         PersonErrorResponse response = new PersonErrorResponse(
                 e.getMessage(),
                 System.currentTimeMillis()
         );
 
         return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity handleException(NotFoundException e) {
+        PersonErrorResponse response = new PersonErrorResponse(
+                e.getMessage(),
+                System.currentTimeMillis()
+        );
+
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
 }

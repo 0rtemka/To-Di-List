@@ -4,6 +4,7 @@ import com.example.todolistrest.dto.PersonDTO;
 import com.example.todolistrest.models.Person;
 import com.example.todolistrest.repositories.PeopleRepository;
 import com.example.todolistrest.utils.CreateException;
+import com.example.todolistrest.utils.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class PeopleService {
     public Person getPerson(int id) {
         Optional<Person> person = peopleRepository.findById(id);
 
-        if (person.isEmpty()) return null; //TODO: create NotFoundException and throw it if person is empty
+        if (person.isEmpty()) throw new NotFoundException("Пользователь не найден");
 
         return person.get();
     }
