@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name:
+    url:
+    username:
+    password:
+
+  jpa:
+    database:
+    database-platform:
+    show-sql:
+
+    hibernate:
+      ddl-auto:
+
+    properties:
+      hibernate:
+        format_sql:
+
+
