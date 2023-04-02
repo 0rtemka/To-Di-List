@@ -1,13 +1,13 @@
 package com.example.todolistrest.controllers;
 
 import com.example.todolistrest.dto.PersonDTO;
-import com.example.todolistrest.models.Person;
 import com.example.todolistrest.services.PeopleService;
+import com.example.todolistrest.utils.CreateException;
+import com.example.todolistrest.utils.PersonErrorResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +25,21 @@ public class PeopleController {
     @GetMapping("/{id}")
     public PersonDTO getPersonById(@PathVariable int id) {
         return peopleService.convertToPersonDTO(peopleService.getPerson(id));
+    }
+
+    @PostMapping
+    public ResponseEntity addPerson(@RequestBody PersonDTO personDTO) {
+        peopleService.addPerson(personDTO);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity handeException(CreateException e) {
+        PersonErrorResponse response = new PersonErrorResponse(
+                e.getMessage(),
+                System.currentTimeMillis()
+        );
+
+        return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
     }
 }

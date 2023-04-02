@@ -3,6 +3,8 @@ package com.example.todolistrest.repositories;
 import com.example.todolistrest.models.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PeopleRepository extends JpaRepository<Person, Integer> {
+import java.util.Optional;
 
+public interface PeopleRepository extends JpaRepository<Person, Integer> {
+    Optional<Person> findByUsername(String username);
 }
