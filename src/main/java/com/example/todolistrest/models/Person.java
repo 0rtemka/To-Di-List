@@ -12,7 +12,7 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int person_id;
 
-    private int username;
+    private String username;
 
     @OneToMany(mappedBy = "person")
     private List<Task> tasks;
