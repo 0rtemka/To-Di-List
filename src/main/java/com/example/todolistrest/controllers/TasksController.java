@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,7 +36,7 @@ public class TasksController {
     private ResponseEntity<PersonErrorResponse> handleException(NotFoundException e) {
         PersonErrorResponse response = new PersonErrorResponse(
                 e.getMessage(),
-                System.currentTimeMillis()
+                LocalDateTime.now()
         );
 
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
