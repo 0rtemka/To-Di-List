@@ -29,13 +29,13 @@ public class PeopleController {
     }
 
     @PostMapping
-    public ResponseEntity addPerson(@RequestBody PersonDTO personDTO) {
+    public ResponseEntity<HttpStatus> addPerson(@RequestBody PersonDTO personDTO) {
         peopleService.addPerson(personDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @ExceptionHandler
-    private ResponseEntity handleException(CreateException e) {
+    private ResponseEntity<PersonErrorResponse> handleException(CreateException e) {
         PersonErrorResponse response = new PersonErrorResponse(
                 e.getMessage(),
                 System.currentTimeMillis()
@@ -45,7 +45,7 @@ public class PeopleController {
     }
 
     @ExceptionHandler
-    private ResponseEntity handleException(NotFoundException e) {
+    private ResponseEntity<PersonErrorResponse> handleException(NotFoundException e) {
         PersonErrorResponse response = new PersonErrorResponse(
                 e.getMessage(),
                 System.currentTimeMillis()
