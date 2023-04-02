@@ -1,3 +1,5 @@
+#put here your db settings
+
 spring:
   datasource:
     driver-class-name:
