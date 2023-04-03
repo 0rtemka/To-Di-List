@@ -21,7 +21,11 @@ public class PeopleController {
 
     @GetMapping
     public List<PersonDTO> getPeople() {
-        return peopleService.getPeople().stream().map(peopleService::convertToPersonDTO).toList();
+        return peopleService
+                .getPeople()
+                .stream()
+                .map(peopleService::convertToPersonDTO)
+                .toList();
     }
 
     @GetMapping("/{id}")
