@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 @RestController
-@RequestMapping("/user/tasks")
+@RequestMapping("/users/{person_id}/tasks")
 @RequiredArgsConstructor
 public class TasksController {
     private final TasksService tasksService;
-    @GetMapping("/{person_id}")
+    @GetMapping
     public List<TaskDTO> getTasks(@PathVariable int person_id) {
         return tasksService
                 .getTasks(person_id)
@@ -26,9 +25,17 @@ public class TasksController {
                 .toList();
     }
 
-    @PostMapping("/{person_id}")
+    @PostMapping
     public ResponseEntity<HttpStatus> addTask(@PathVariable int person_id, @RequestBody TaskDTO taskDTO) {
         tasksService.addTask(taskDTO, person_id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PutMapping("/{task_id}")
+    public ResponseEntity<HttpStatus> finishTask(@PathVariable int person_id,
+                                                 @PathVariable int task_id)
+    {
+        tasksService.finishTask(person_id, task_id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
